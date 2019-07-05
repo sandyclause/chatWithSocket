@@ -2,8 +2,8 @@ const socket = io();
 
 document.querySelector('#welcome').addEventListener('submit', (e) => {
   e.preventDefault();
-  const inputValue = document.querySelector('#input').value;
-  socket.emit('sendMessage', inputValue)
+  const message = e.target.elements.message.value;
+  socket.emit('sendMessage', message)
 })
 
 socket.on('message', (message) => {

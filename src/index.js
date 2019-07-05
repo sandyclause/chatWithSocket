@@ -12,17 +12,20 @@ const publicDiriectionPath = path.join(__dirname, '../public');
 
 app.use(express.static(publicDiriectionPath));
 
-// let count = 0;
-
 io.on('connection', (socket) => {
   console.log('new websocket connection');
 
   const message = 'Welcome!'
 
-  socket.emit('message', message)
+  socket.emit('message', message);
+  socket.broadcast.emit('message', 'a new user has joined');
 
   socket.on('sendMessage', (message) => {
     io.emit('message', message)
+  })
+
+  socket.on('disconnect', () => {
+    io.emit('message', 'a user has left')
   })
 })
 

@@ -3,7 +3,12 @@ const socket = io();
 document.querySelector('#welcome').addEventListener('submit', (e) => {
   e.preventDefault();
   const message = e.target.elements.message.value;
-  socket.emit('sendMessage', message)
+  socket.emit('sendMessage', message, (error) => {
+    if (error) {
+      return console.log(error)
+    }
+    console.log('messaged delivered')
+  })
 })
 
 socket.on('message', (message) => {
@@ -24,6 +29,8 @@ document.querySelector('#sendLocation').addEventListener('click', () => {
     socket.emit('sendLocation', {
       long,
       lat
+    }, () => {
+      console.log('location sent')
     })
   })
 })

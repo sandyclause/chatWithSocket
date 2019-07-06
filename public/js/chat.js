@@ -4,6 +4,8 @@ const $messageForm = document.querySelector('#messageForm');
 const $messageFormInput = $messageForm.querySelector('input');
 const $messageFormButton = $messageForm.querySelector('button');
 
+const $locationButton = document.querySelector('#sendLocation');
+
 $messageForm.addEventListener('submit', (e) => {
   e.preventDefault();
 
@@ -28,10 +30,12 @@ socket.on('message', (message) => {
   console.log(message)
 })
 
-document.querySelector('#sendLocation').addEventListener('click', () => {
+$locationButton.addEventListener('click', () => {
   if (!navigator.geolocation) {
     return alert('geolocation is not supported by your browser.')
   }
+
+  $locationButton.setAttribute('disabled', 'disabled');
 
   navigator.geolocation.getCurrentPosition((position) => {
     console.log(position)
@@ -43,6 +47,7 @@ document.querySelector('#sendLocation').addEventListener('click', () => {
       long,
       lat
     }, () => {
+      $locationButton.removeAttribute('disabled');
       console.log('location sent')
     })
   })

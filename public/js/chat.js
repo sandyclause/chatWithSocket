@@ -32,7 +32,9 @@ $messageForm.addEventListener('submit', (e) => {
 
 socket.on('message', (message) => {
   console.log(message)
-  const html = Mustache.render(messageTemplate);
+  const html = Mustache.render(messageTemplate, {
+    message
+  });
   $messages.insertAdjacentHTML('beforeend', html)
 })
 

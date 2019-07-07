@@ -9,6 +9,8 @@ const $messages = document.querySelector('#messages');
 
 // tempaltes
 const messageTemplate = document.querySelector('#messageTemplate').innerHTML;
+const locationLink = document.querySelector('#locationLink').innerHTML;
+
 
 $messageForm.addEventListener('submit', (e) => {
   e.preventDefault();
@@ -28,6 +30,14 @@ $messageForm.addEventListener('submit', (e) => {
     }
     console.log('messaged delivered')
   })
+})
+
+socket.on('locationMessage', (url) => {
+  console.log(url)
+  const html = Mustache.render(locationLink, {
+    link: url
+  });
+  $messages.insertAdjacentHTML('beforeend', html)
 })
 
 socket.on('message', (message) => {
